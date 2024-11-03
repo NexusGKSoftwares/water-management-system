@@ -1,23 +1,21 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
-	"github.com/gorilla/mux" // Import a popular router package
+	"github.com/yourusername/water-management-system/config"
+	"github.com/yourusername/water-management-system/routes"
 )
 
 func main() {
-	r := mux.NewRouter()
+	// Load configuration
+	cfg := config.LoadConfig()
 
 	// Setup routes
-	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Welcome to the Water Management System!")
-	})
+	r := routes.SetupRoutes()
 
 	// Start the server
-	port := ":8080"
-	log.Printf("Server starting on port %s", port)
-	log.Fatal(http.ListenAndServe(port, r))
+	log.Printf("Server starting on port %s", cfg.Port)
+	log.Fatal(http.ListenAndServe(":"+cfg.Port, r))
 }
