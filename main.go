@@ -6,6 +6,7 @@ import (
 
 	"github.com/yourusername/water-management-system/config"
 	"github.com/yourusername/water-management-system/internal/db"
+	"github.com/yourusername/water-management-system/handlers/water"
 	"github.com/yourusername/water-management-system/routes"
 )
 
@@ -16,6 +17,9 @@ func main() {
 	// Connect to the database
 	database := db.ConnectDatabase()
 	defer database.Close()
+
+	// Initialize handlers with the database
+	water.InitializeHandler(database)
 
 	// Setup routes
 	r := routes.SetupRoutes()
